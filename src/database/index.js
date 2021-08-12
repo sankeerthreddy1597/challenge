@@ -16,13 +16,27 @@ const mockDBCall = (dataAccessMethod) => {
 // MOCK DB CALLS
 //----------------
 const getUsers = () => {
-  const dataAccessMethod = () => _.map(db.usersById, (userInfo) => userInfo);
+  const dataAccessMethod = () => {
+    try {
+      const users = _.map(db.usersById, (userInfo) => userInfo);
+      //handling server failure
+      return {
+        success: true,
+        payload: users,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: error.message,
+      };
+    }
+  };
   return mockDBCall(dataAccessMethod);
 };
 
 const getListOfAgesOfUsersWith = (item) => {
   const dataAccessMethod = () => {
-    // fill me in :)
+    //Try Catch block to catch any errors and avoid crashing server.
     try {
       //Array to store users with item
       let users = [];
@@ -61,7 +75,12 @@ const getListOfAgesOfUsersWith = (item) => {
       for (const userAge in itemUserAgeCount) {
         res.push({ age: parseInt(userAge), count: itemUserAgeCount[userAge] });
       }
-      return res;
+
+      // Error Handling - Success = true
+      return {
+        success: true,
+        payload: res,
+      };
     } catch (error) {
       //Return False and error message instead of crashing server.
       return {
