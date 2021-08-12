@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
 import Table from "./Components/Table/Table";
-import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "./redux/actions/userItems";
 
 const App = () => {
   const items = [
