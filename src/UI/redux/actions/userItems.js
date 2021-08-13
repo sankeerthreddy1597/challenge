@@ -18,9 +18,7 @@ export const getUsers = () => async (dispatch, getState) => {
 };
 
 export const getItemAgeDemographic = (item) => async (dispatch, getState) => {
-  console.log(item);
   const { data } = await axios.get(`${baseURL}/users/age/${item}`, config);
-  console.log(data);
   dispatch({
     type: GET_ITEM_AGE_DEMOGRAPHIC,
     payload: data,
